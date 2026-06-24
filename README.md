@@ -253,9 +253,7 @@ pnpm build
 
 ---
 
-## 🚢 Deployment
-
-## 🚢 Deployment
+### 🚢 Deployment
 
 ### Deploy to Vercel
 
