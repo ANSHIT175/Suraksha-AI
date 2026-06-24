@@ -14,8 +14,7 @@ Suraksha AI is an AI-powered digital public safety platform designed to detect a
 
 The platform analyzes messages, URLs, call transcripts, and documents using multi-layer AI to identify scams including digital arrest fraud, counterfeit currency, phishing, OTP fraud, and organized fraud networks.
 
-**Live Website:**([https://surakshaai-rxpamehl.manus.space/](https://suraksha-ai-cqso.vercel.app/))
-
+**Live Website:** [((https://suraksha-ai-cqso.vercel.app/))](https://suraksha-ai-cqso.vercel.app/)
 ---
 
 ## ✨ Key Features
