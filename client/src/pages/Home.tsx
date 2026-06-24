@@ -51,28 +51,151 @@ const SAMPLE_CASES = {
   },
 };
 
-// Mock scam analysis response
+// Intelligent scam analysis with strict pattern matching - requires multiple indicators for HIGH/CRITICAL
 const generateScamReport = (input: string) => {
-  return {
-    riskScore: Math.floor(Math.random() * 40) + 60,
-    riskLevel: 'HIGH',
-    scamType: 'Phishing / Social Engineering',
-    detectedPatterns: [
-      'Urgency indicators (24 hours, immediate action)',
-      'Impersonation of government/financial institutions',
-      'Suspicious URL patterns',
-      'Request for personal information',
-      'Threat of account suspension',
-    ],
-    explanation:
-      'This message exhibits multiple characteristics of a phishing scam. It uses urgency tactics, impersonates official institutions, and contains suspicious links designed to steal personal information.',
-    recommendations: [
-      'Do not click any links in the message',
+  const lowerInput = input.toLowerCase();
+  
+  // Define STRONG scam keywords and patterns (must be present for HIGH/CRITICAL risk)
+  const strongUrgencyKeywords = ['urgent', 'immediately', 'within 24 hours', 'within 48 hours', 'right now', 'do not delay', 'act now'];
+  const strongSuspensionKeywords = ['suspended', 'frozen', 'locked', 'account closed', 'deactivated'];
+  const strongKycKeywords = ['kyc', 'aadhaar', 'aadhar', 'verification required', 'update kyc'];
+  const strongOtpKeywords = ['otp', 'one time password', 'verification code', 'enter otp'];
+  const strongUrlKeywords = ['.tk', '.ml', '.ga', 'verify-', 'secure-', 'confirm-', 'update-', 'aadhar-verify'];
+  const strongAuthorityKeywords = ['police', 'cbi', 'ed', 'customs', 'income tax', 'fir', 'arrest', 'digital arrest'];
+  const strongPaymentKeywords = ['pay immediately', 'payment required', 'fine', 'customs charge', 'tax penalty'];
+  
+  // Count STRONG scam indicators only
+  let detectedPatterns: string[] = [];
+  let strongIndicators = 0;
+  let riskScore = 5; // Start with base low risk
+  
+  // Check for STRONG urgency indicators
+  if (strongUrgencyKeywords.some(keyword => lowerInput.includes(keyword))) {
+    detectedPatterns.push('Urgency indicators (immediate action required)');
+    strongIndicators++;
+    riskScore += 15;
+  }
+  
+  // Check for STRONG suspension threats
+  if (strongSuspensionKeywords.some(keyword => lowerInput.includes(keyword))) {
+    detectedPatterns.push('Threat of account suspension or freezing');
+    strongIndicators++;
+    riskScore += 15;
+  }
+  
+  // Check for STRONG KYC/Aadhaar fraud
+  if (strongKycKeywords.some(keyword => lowerInput.includes(keyword))) {
+    detectedPatterns.push('KYC/Aadhaar verification fraud indicators');
+    strongIndicators++;
+    riskScore += 18;
+  }
+  
+  // Check for STRONG OTP/Password requests
+  if (strongOtpKeywords.some(keyword => lowerInput.includes(keyword))) {
+    detectedPatterns.push('Request for OTP or verification code');
+    strongIndicators++;
+    riskScore += 20;
+  }
+  
+  // Check for STRONG suspicious URLs
+  if (strongUrlKeywords.some(keyword => lowerInput.includes(keyword))) {
+    detectedPatterns.push('Suspicious URL patterns detected');
+    strongIndicators++;
+    riskScore += 16;
+  }
+  
+  // Check for STRONG authority impersonation
+  if (strongAuthorityKeywords.some(keyword => lowerInput.includes(keyword))) {
+    detectedPatterns.push('Impersonation of government/law enforcement');
+    strongIndicators++;
+    riskScore += 20;
+  }
+  
+  // Check for STRONG payment demands
+  if (strongPaymentKeywords.some(keyword => lowerInput.includes(keyword))) {
+    detectedPatterns.push('Urgent payment or fine demand');
+    strongIndicators++;
+    riskScore += 15;
+  }
+  
+  // Cap risk score at 100
+  riskScore = Math.min(riskScore, 100);
+  
+  // Determine risk level based on STRONG indicators count, not just score
+  let riskLevel = 'LOW';
+  let scamType = 'No Threat';
+  let explanation = '';
+  let recommendations = [
+    'Stay alert and verify unknown links',
+    'Never share OTP, PIN, or passwords',
+    'Contact official channels directly',
+    'Enable two-factor authentication',
+    'Monitor your account regularly'
+  ];
+  
+  // CRITICAL: 3+ strong indicators AND score >= 70
+  if (strongIndicators >= 3 && riskScore >= 70) {
+    riskLevel = 'CRITICAL';
+    scamType = 'Multiple Fraud Indicators Detected';
+    explanation = 'This input contains multiple strong indicators of a sophisticated scam attempt. It exhibits characteristics of phishing, impersonation, and social engineering designed to compromise your security and steal sensitive information.';
+    recommendations = [
+      'Do NOT click any links or download attachments',
+      'Do NOT share any personal or financial information',
+      'Report immediately to cybercrime portal (cybercrime.gov.in)',
+      'Contact your bank/service provider directly',
+      'File a complaint with local authorities',
+      'Enable two-factor authentication immediately'
+    ];
+  }
+  // HIGH: 2+ strong indicators AND score >= 50
+  else if (strongIndicators >= 2 && riskScore >= 50) {
+    riskLevel = 'HIGH';
+    scamType = 'Strong Scam Pattern Detected';
+    explanation = 'This message exhibits multiple characteristics of a phishing or fraud scam. It uses urgency tactics, impersonates official institutions, and attempts to extract sensitive information through social engineering techniques.';
+    recommendations = [
+      'Do not click any suspicious links',
       'Verify directly with official channels',
       'Report to cybercrime portal',
       'Enable two-factor authentication',
-      'Monitor your account for unauthorized access',
-    ],
+      'Monitor your account for unauthorized access'
+    ];
+  }
+  // MEDIUM: 1 strong indicator
+  else if (strongIndicators >= 1) {
+    riskLevel = 'MEDIUM';
+    scamType = 'Potential Fraud Indicators';
+    explanation = 'This message contains some characteristics that could be associated with scams, though it may not be definitively malicious. Exercise caution and verify information through official channels before taking any action.';
+    recommendations = [
+      'Verify information through official channels',
+      'Be cautious of unsolicited requests',
+      'Never share sensitive information via message',
+      'Enable two-factor authentication',
+      'Stay informed about common scam tactics'
+    ];
+  }
+  // LOW: No strong indicators
+  else {
+    riskScore = Math.floor(Math.random() * 11) + 5; // 5-15
+    riskLevel = 'LOW';
+    scamType = 'No Threat';
+    explanation = 'This text does not contain scam indicators. It appears to be a normal, harmless message.';
+    detectedPatterns = ['No scam indicators detected'];
+    recommendations = [
+      'No urgent action needed',
+      'Stay alert and verify unknown links',
+      'Never share OTP, PIN, or passwords',
+      'Contact official channels directly',
+      'Monitor your account regularly'
+    ];
+  }
+  
+  return {
+    riskScore,
+    riskLevel,
+    scamType,
+    detectedPatterns: detectedPatterns.length > 0 ? detectedPatterns : ['No scam indicators detected'],
+    explanation,
+    recommendations,
     timestamp: new Date().toLocaleString(),
   };
 };
@@ -890,15 +1013,17 @@ Report Generated: ${scamReport.timestamp}
               <div className="flex gap-3">
                 <Button
                   onClick={handleCopyReport}
+                  disabled={!scamReport}
                   variant="outline"
-                  className="flex-1 border-slate-600 hover:bg-cyan-500/20 hover:border-cyan-500"
+                  className="flex-1 border-slate-600 hover:bg-cyan-500/20 hover:border-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Copy className="w-4 h-4 mr-2" />
                   Copy Report
                 </Button>
                 <Button
                   onClick={handleDownloadReport}
-                  className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600"
+                  disabled={!scamReport}
+                  className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Download className="w-4 h-4 mr-2" />
                   Download Report
