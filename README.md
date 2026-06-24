@@ -2,7 +2,7 @@
 
 **Real-time AI-powered threat detection against digital fraud, counterfeit currency, and organized scams.**
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-surakshaai--rxpamehl.manus.space-00C8FF?style=for-the-badge)] (https://suraksha-ai-cqso.vercel.app/))
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-surakshaai--rxpamehl.manus.space-00C8FF?style=for-the-badge)](https://suraksha-ai-cqso.vercel.app/)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-ANSHIT175%2FSuraksha--AI-000000?style=for-the-badge&logo=github)](https://github.com/ANSHIT175/Suraksha-AI)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
