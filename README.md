@@ -4,7 +4,6 @@
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-suraksha--ai--cqso.vercel.app-00C8FF?style=for-the-badge)](https://suraksha-ai-cqso.vercel.app/)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-ANSHIT175%2FSuraksha--AI-000000?style=for-the-badge&logo=github)](https://github.com/ANSHIT175/Suraksha-AI)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 ---
 
@@ -372,16 +371,6 @@ Found a bug? Please report it:
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-MIT License allows:
-- ✅ Commercial use
-- ✅ Modification
-- ✅ Distribution
-- ✅ Private use
-
 With conditions:
 - ⚠️ License and copyright notice required
 
@@ -419,16 +408,14 @@ With conditions:
 
 ---
 
-## 💡 Key Statistics
+## 💡 Prototype Highlights
 
-| Metric | Value |
-|--------|-------|
-| **Response Time** | < 500ms |
-| **Accuracy** | 94%+ |
-| **Supported Scam Types** | 50+ |
-| **Mobile Compatibility** | 100% |
-| **Uptime** | 99.9% |
-| **Users Protected** | 10,000+ |
+- Real-time scam risk scoring
+- Multiple scam categories supported
+- Mobile-responsive interface
+- Sample cases for quick testing
+- Copy and download report functionality
+- Deployed live prototype on Vercel
 
 ---
 
@@ -442,14 +429,16 @@ With conditions:
 
 ---
 
-## 🌟 Star History
+## 🙏 Acknowledgements
 
-If you find this project helpful, please give it a star! ⭐
+- React Team for the UI library
+- Tailwind CSS for styling
+- Vite for fast frontend tooling
+- Open-source community resources
 
-```
-⭐ Star this repository to show your support
-```
+---
 
+Built for safer digital public interactions.
 ---
 
 **Built with ❤️ for a safer digital India**
